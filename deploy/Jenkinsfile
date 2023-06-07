@@ -6,9 +6,11 @@ pipeline {
             steps {
                 echo "hello world"
             }
-            
+        }
+
+        stage("Say My name") {
             steps {
-                echo "my name is leeodnggyu"
+                echo "my name is leedonggyu"
             }
         }
     }
