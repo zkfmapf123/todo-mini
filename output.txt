@@ -1,0 +1,14 @@
+Dockerfile
+Makefile
+README.md
+__test__
+bable.config.js
+deploy
+jest.config.js
+node_modules
+output.txt
+package-lock.json
+package.json
+public
+src
+tsconfig.json
