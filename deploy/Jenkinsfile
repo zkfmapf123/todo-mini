@@ -2,15 +2,33 @@ pipeline {
     agent any
 
     stages {
-        stage("Hi") {
+        stage("CI Test") {
             steps {
-                echo "hello world"
+                echo "ci test"
             }
         }
 
-        stage("Say My name") {
+        stage("Stress Test") {
             steps {
-                echo "my name is leedonggyu"
+                echo "stress test"
+            }
+        }
+
+        stage("Build") {
+            steps {
+                echo "build"
+            }
+        }
+
+        stage("Push The ECR") {
+            steps {
+                echo "push the ecr"
+            }
+        }
+
+        stage("Send Notification") {
+            steps {
+                echo "send notification"
             }
         }
     }
