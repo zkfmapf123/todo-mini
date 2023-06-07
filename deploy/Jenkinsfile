@@ -6,6 +6,10 @@ pipeline {
             steps {
                 echo "hello world"
             }
+            
+            steps {
+                echo "my name is leeodnggyu"
+            }
         }
     }
 }
