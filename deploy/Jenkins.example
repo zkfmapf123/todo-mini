@@ -1,0 +1,70 @@
+pipeline {
+    agent any
+    
+    environment {
+        GIT_URL = "git@gitlab.platform.metapixel.io:metapixel/metapixel-proof-of-play.git"
+        GIT_CREDENTIAL = "meta-plt-gitlab-jenkins-parania"
+        GIT_BRANCH = "main"
+        ECR_PATH = "021206237994.dkr.ecr.ap-northeast-2.amazonaws.com"
+        DOCKER_IMAGE_NAME = "021206237994.dkr.ecr.ap-northeast-2.amazonaws.com/proof-of-play"
+        AWS_REGION = "ap-northeast-2"
+        AWS_CREDENTIAL_NAME = "meta-mpx-plt-jenkins-ecr-ecs-deploy"
+        ECS_TASK_DEF_FILE_ID = "meta-mpx-plt-popapi-ecs-task-dev-aws-cli-v1"
+        AWS_ECS_TASK_DEF = "meta-mpx-plt-popapi-ecs-task-dev"
+        AWS_ECS_CLUSTER = "meta-mpx-plt-popapi-ecs-dev"
+        AWS_ECS_SERVICE = "meta-mpx-plt-popapi-ecs-service-4-dev"
+    }
+    
+    stages {
+        stage('Source') {
+            steps {
+                git branch: "${env.GIT_BRANCH}", credentialsId: "${GIT_CREDENTIAL}", url: "${env.GIT_URL}"
+                
+                // must be after git
+                updateGitlabCommitStatus name: 'build', state: 'pending'
+            }
+        }
+        // stage('Build') {
+        //     steps {
+        //         sshagent(["${GIT_CREDENTIAL}"]) {
+        //             dir('apiserver') {
+        //                 nodejs(nodeJSInstallationName: 'node 16.19.0') {
+        //                     sh '''npm install
+        //                     npm run buildtsoa
+        //                     npm run buildapp'''
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+        
+        stage('Dockerize') {
+            steps {
+                dir('apiserver') {
+                    script {
+                        docker.build("${DOCKER_IMAGE_NAME}:build-${env.BUILD_ID}")
+                        docker.build("${DOCKER_IMAGE_NAME}:build-latest")
+                        
+                        docker.withRegistry("https://${ECR_PATH}", "ecr:${AWS_REGION}:${AWS_CREDENTIAL_NAME}") {
+                            docker.image("${DOCKER_IMAGE_NAME}:build-${env.BUILD_ID}").push()
+                            docker.image("${DOCKER_IMAGE_NAME}:build-latest").push()
+                        }
+                        
+                        withAWS(credentials:"${AWS_CREDENTIAL_NAME}", region:"${AWS_REGION}") {
+                            configFileProvider([configFile(fileId: "${ECS_TASK_DEF_FILE_ID}", variable: 'TASK_DEF_FILE_PATH')]) {
+                                sh "aws ecs register-task-definition --cli-input-json file://${TASK_DEF_FILE_PATH}"
+                            }
+                            
+                            sh "aws ecs update-service --cluster ${AWS_ECS_CLUSTER} --service ${AWS_ECS_SERVICE} --task-definition ${AWS_ECS_TASK_DEF}"
+                        }
+                    }
+                }
+            }
+        }
+        stage('PosteBuild') {
+            steps {
+                updateGitlabCommitStatus name: 'build', state: 'success'
+            }
+        }
+    }
+}
