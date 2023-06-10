@@ -1,9 +1,12 @@
 pipeline {
     agent any
 
-    string(name : "DOCKER_IMAGE", default : "demo", description : "docker image")
-    string(name : "DOCKER_ENV", default: "dev", description : "docker env")
-    string(name : "DOCKER_VERSION", default : "1.0.0", description : "docker tag")
+    parameters {
+        string(name : "DOCKER_IMAGE", default : "demo", description : "docker image")
+        string(name : "DOCKER_ENV", default: "dev", description : "docker env")
+        string(name : "DOCKER_VERSION", default : "1.0.0", description : "docker tag")
+    }
+
 
     environment {
         REGION = "ap-northeast-2"
