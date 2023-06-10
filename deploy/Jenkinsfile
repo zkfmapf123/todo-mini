@@ -4,13 +4,17 @@ pipeline{
     stages {
         stage("node install") {
             steps {
-                docker {
-                    image 'node'
+                script {
+                    sh "docker pull node:16-alpine"
                 }
             }
-            
+        }
+
+        stage("docker images") {
             steps {
-            sh "docker images"
+                script {
+                    sh "docker images"
+                }
             }
         }
     }
