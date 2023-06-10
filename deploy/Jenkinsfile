@@ -20,8 +20,12 @@ pipeline {
 
         stage("CI Test") {
             steps {
-                sh 'npm install'
-                sh 'jest'
+                nodejs(nodeJSInstallationName: 'node 16.19.0') {
+                    sh '''
+                        npm install
+                        jest
+                    '''
+                }
             }
         }
     }
