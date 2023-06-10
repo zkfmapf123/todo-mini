@@ -1,18 +1,13 @@
 pipeline{
-    agent{
-        label "node"
-    }
+    agent any
 
     stages {
-        label "node"
         stage("Stage 1") {
             steps {
                 echo "Hello world"
             }
         }
     }
-
-    
 
     post{
         always{
