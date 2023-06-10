@@ -4,13 +4,16 @@ pipeline{
     tools {nodejs "nodejs"}
 
     stages {
-        stage("Build") {
+        stage("node install") {
             steps {
-                sh """
-                    npm run instal
-                    ls
-                """
+                docker {
+                    image 'node'
+                }
             }
+        }
+
+        steps {
+            sh "docker images"
         }
     }
 }
