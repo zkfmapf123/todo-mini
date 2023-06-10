@@ -20,7 +20,7 @@ pipeline {
         stage("Build Docker Images") {
             steps {
                 dir("deploy") {
-                    sh 'ls'
+                    sh 'docker build -t node:test .'
                 }
             }
         }
