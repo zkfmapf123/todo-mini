@@ -19,7 +19,36 @@ pipeline {
     stages {
         stage("Build Docker Images") {
             steps {
-                sh 'ls'
+                dir("deploy") {
+                    sh 'ls'
+                }
+            }
+        }
+
+        stage("Docker Execute Container") {
+            steps {
+                echo "Docker Execute Container"
+            }
+        }
+
+        stage("CI Test") {
+            
+            parallel {
+                stage ("Unit Test") {
+                    echo "unit test"
+                }
+
+                stage("TDD Test") {    
+                    echo "tdd test"
+                }
+
+                stage("BDD Test") {    
+                    echo "bdd test"
+                }
+
+                stage("E2E Test") {    
+                    echo "e2e test"
+                }
             }
         }
 
