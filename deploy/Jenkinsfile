@@ -8,10 +8,10 @@ pipeline{
                     image 'node'
                 }
             }
-        }
-
-        steps {
+            
+            steps {
             sh "docker images"
+            }
         }
     }
 }
