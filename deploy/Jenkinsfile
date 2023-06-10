@@ -17,11 +17,10 @@ pipeline {
     }
 
     stages {
+
         stage("Build Docker Images") {
             steps {
-                dir("deploy") {
-                    sh 'docker build -t node:test .'
-                }
+                echo "Build Docker Image"
             }
         }
 
@@ -59,35 +58,15 @@ pipeline {
                 }
             }
         }
-
-        // stage("Run Test Code") {
-        //     steps {
-        //         echo "run test code"    
-        //     }
-        // }
-
-        // stage("Push Docker Image") {
-        //     steps {
-        //         echo "push docker image"    
-        //     }
-        // }
-
-        // stage("Alarm To Push Docker Image") {
-        //     steps {
-        //         echo "alarm to push docker images"    
-        //     }
-        // }
-
-        // stage("Deploy Workload") {
-        //     steps {
-        //         echo "deploy workload"    
-        //     }
-        // }
     }
 
     post {
         always {
             echo "always"
+        }
+
+        cleanup {
+            echo "Post Cleanup"
         }
     }
 }
