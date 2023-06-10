@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage("Build Docker Images") {
             steps {
-                echo "${DOCKER_IMAGE}_${DOCKER_ENV}_${DOCKER_VERSION}"   
+                echo "${params.DOCKER_IMAGE}_${params.DOCKER_ENV}_${params.DOCKER_VERSION}"   
             }
         }
 
