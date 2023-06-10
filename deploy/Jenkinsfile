@@ -1,27 +1,27 @@
-pipeline {
-    agent any
-
-    parameters {
-        string(name : "DOCKER_PATH", defaultValue : "deploy", description : "docker image path")
-        string(name : "DOCKER_IMAGE", defaultValue : "demo", description : "docker image")
-        string(name : "DOCKER_ENV", defaultValue: "dev", description : "docker env")
-        string(name : "DOCKER_VERSION", defaultValue : "1.0.0", description : "docker tag")
-    }
-
-
-    environment {
-        REGION = "ap-northeast-2"
-        ECR_REPOSITORY = ""
-        ECR_DOCKER_NAME = ""
-        ECR_DOCKER_TAG = ""
+pipeline{
+    agent{
+        label "node"
     }
 
     stages {
-        stage("test") {
+        stage("Stage 1") {
             steps {
-                echo "hello world"
+                echo "Hello world"
             }
         }
     }
 
+    
+
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
 }
