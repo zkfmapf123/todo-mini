@@ -2,33 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage("CI Test") {
+        stage("====== Build Docker Image =====") {
             steps {
-                echo "ci test"
-            }
-        }
-
-        stage("Stress Test") {
-            steps {
-                echo "stress test"
-            }
-        }
-
-        stage("Build") {
-            steps {
-                echo "build"
-            }
-        }
-
-        stage("Push The ECR") {
-            steps {
-                echo "push the ecr"
-            }
-        }
-
-        stage("Send Notification") {
-            steps {
-                echo "send notification"
+                echo "hello world"    
             }
         }
     }
