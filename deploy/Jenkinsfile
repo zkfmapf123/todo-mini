@@ -35,19 +35,27 @@ pipeline {
             
             parallel {
                 stage ("Unit Test") {
-                    echo "unit test"
+                    steps {
+                        echo "unit test"
+                    }
                 }
 
                 stage("TDD Test") {    
-                    echo "tdd test"
+                    steps {
+                        echo "tdd test"
+                    }
                 }
 
                 stage("BDD Test") {    
-                    echo "bdd test"
+                    steps {
+                        echo "bdd test"
+                    }
                 }
 
                 stage("E2E Test") {    
-                    echo "e2e test"
+                    steps {
+                        echo "e2e test"
+                    }
                 }
             }
         }
