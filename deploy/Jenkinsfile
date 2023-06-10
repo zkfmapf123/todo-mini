@@ -1,12 +1,21 @@
 pipeline {
     agent any
 
-    booleanParam(name : "BUILD_DOCKER_NAME", )
+    string(name : "DOCKER_IMAGE", default : "demo", description : "docker image")
+    string(name : "DOCKER_ENV", default: "dev", description : "docker env")
+    string(name : "DOCKER_VERSION", default : "1.0.0", description : "docker tag")
+
+    environment {
+        REGION = "ap-northeast-2"
+        ECR_REPOSITORY = ""
+        ECR_DOCKER_NAME = ""
+        ECR_DOCKER_TAG = ""
+    }
 
     stages {
         stage("Build Docker Images") {
             steps {
-                echo "build docker images"    
+                echo "${DOCKER_IMAGE}_${DOCKER_ENV}_${DOCKER_VERSION}"   
             }
         }
 
