@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     parameters {
-        string(name : "DOCKER_IMAGE", default : "demo", description : "docker image")
-        string(name : "DOCKER_ENV", default: "dev", description : "docker env")
-        string(name : "DOCKER_VERSION", default : "1.0.0", description : "docker tag")
+        string(name : "DOCKER_IMAGE", defaultValue : "demo", description : "docker image")
+        string(name : "DOCKER_ENV", defaultValue: "dev", description : "docker env")
+        string(name : "DOCKER_VERSION", defaultValue : "1.0.0", description : "docker tag")
     }
 
 
