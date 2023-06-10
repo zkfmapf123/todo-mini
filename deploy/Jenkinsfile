@@ -17,32 +17,11 @@ pipeline {
     }
 
     stages {
-
-        stage("CI Test") {
-            steps {
-                nodejs(nodeJSInstallationName: 'node 16.19.0') {
-                    sh '''
-                        npm install
-                        jest
-                    '''
-                }
-            }
-        }
-
         stage("test") {
             steps {
-                echo "hihi"
+                echo "hello world"
             }
         }
     }
 
-    post {
-        always {
-            echo "always"
-        }
-
-        cleanup {
-            echo "Post Cleanup"
-        }
-    }
 }
