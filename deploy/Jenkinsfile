@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     parameters {
+        string(name : "DOCKER_PATH", defaultValue : "deploy", description : "docker image path")
         string(name : "DOCKER_IMAGE", defaultValue : "demo", description : "docker image")
         string(name : "DOCKER_ENV", defaultValue: "dev", description : "docker env")
         string(name : "DOCKER_VERSION", defaultValue : "1.0.0", description : "docker tag")
@@ -18,7 +19,7 @@ pipeline {
     stages {
         stage("Build Docker Images") {
             steps {
-                echo "${params.DOCKER_IMAGE}_${params.DOCKER_ENV}_${params.DOCKER_VERSION}"   
+                echo `(ls)`
             }
         }
 
