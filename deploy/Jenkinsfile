@@ -28,6 +28,12 @@ pipeline {
                 }
             }
         }
+
+        stage("test") {
+            steps {
+                echo "hihi"
+            }
+        }
     }
 
     post {
